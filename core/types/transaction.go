@@ -28,6 +28,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/math"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/rlp"
 )
 
@@ -146,6 +147,7 @@ func (tx *Transaction) DecodeRLP(s *rlp.Stream) error {
 		}
 		return err
 	default:
+		log.Warn("Transaction rlp.ErrExpectedList:", "kind", kind.String())
 		return rlp.ErrExpectedList
 	}
 }

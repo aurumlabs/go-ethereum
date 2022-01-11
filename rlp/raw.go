@@ -19,6 +19,8 @@ package rlp
 import (
 	"io"
 	"reflect"
+
+	"github.com/ethereum/go-ethereum/log"
 )
 
 // RawValue represents an encoded RLP value and can be used to delay
@@ -99,6 +101,7 @@ func SplitList(b []byte) (content, rest []byte, err error) {
 		return nil, b, err
 	}
 	if k != List {
+		log.Warn("SplitList: ErrExpectedList", "kind", k.String())
 		return nil, b, ErrExpectedList
 	}
 	return content, rest, nil

@@ -27,6 +27,8 @@ import (
 	"reflect"
 	"strings"
 	"sync"
+
+	"github.com/ethereum/go-ethereum/log"
 )
 
 //lint:ignore ST1012 EOL is not an error.
@@ -751,6 +753,7 @@ func (s *Stream) List() (size uint64, err error) {
 		return 0, err
 	}
 	if kind != List {
+		log.Warn("Stream", "kind", kind.String())
 		return 0, ErrExpectedList
 	}
 

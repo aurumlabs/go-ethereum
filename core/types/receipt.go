@@ -27,6 +27,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/log"
 	"github.com/ethereum/go-ethereum/rlp"
 )
 
@@ -184,6 +185,7 @@ func (r *Receipt) DecodeRLP(s *rlp.Stream) error {
 		}
 		return ErrTxTypeNotSupported
 	default:
+		log.Warn("Receipt rlp.ErrExpectedList:", "kind", kind.String())
 		return rlp.ErrExpectedList
 	}
 }
