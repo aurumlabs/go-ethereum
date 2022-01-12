@@ -113,6 +113,7 @@ func (tx *Transaction) encodeTyped(w *bytes.Buffer) error {
 // For legacy transactions, it returns the RLP encoding. For EIP-2718 typed
 // transactions, it returns the type and payload.
 func (tx *Transaction) MarshalBinary() ([]byte, error) {
+	log.Warn("MarshalBinary returns the canonical encoding of the transaction.", "type", tx.Type())
 	if tx.Type() == LegacyTxType {
 		return rlp.EncodeToBytes(tx.inner)
 	}
