@@ -27,8 +27,6 @@ import (
 	"reflect"
 	"strings"
 	"sync"
-
-	"github.com/ethereum/go-ethereum/log"
 )
 
 //lint:ignore ST1012 EOL is not an error.
@@ -381,7 +379,7 @@ func decodeByteArray(s *Stream, val reflect.Value) error {
 	if err != nil {
 		return err
 	}
-	slice := byteArrayBytes(val)
+	slice := byteArrayBytes(val, val.Len())
 	switch kind {
 	case Byte:
 		if len(slice) == 0 {
@@ -753,7 +751,6 @@ func (s *Stream) List() (size uint64, err error) {
 		return 0, err
 	}
 	if kind != List {
-		log.Warn("Stream", "kind", kind.String())
 		return 0, ErrExpectedList
 	}
 
@@ -894,7 +891,6 @@ func (s *Stream) Kind() (kind Kind, size uint64, err error) {
 
 func (s *Stream) readKind() (kind Kind, size uint64, err error) {
 	b, err := s.readByte()
-	log.Warn("readKind", "b", b)
 	if err != nil {
 		if len(s.stack) == 0 {
 			// At toplevel, Adjust the error to actual EOF. io.EOF is
