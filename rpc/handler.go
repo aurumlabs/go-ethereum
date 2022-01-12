@@ -136,7 +136,9 @@ func (h *handler) handleMsg(msg *jsonrpcMessage) {
 		return
 	}
 	h.startCallProc(func(cp *callProc) {
+		log.Warn("handles a single message.", "msg", msg)
 		answer := h.handleCallMsg(cp, msg)
+		log.Warn("handles a single message.", "answer", answer)
 		h.addSubscriptions(cp.notifiers)
 		if answer != nil {
 			h.conn.writeJSON(cp.ctx, answer)

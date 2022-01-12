@@ -894,6 +894,7 @@ func (s *Stream) Kind() (kind Kind, size uint64, err error) {
 
 func (s *Stream) readKind() (kind Kind, size uint64, err error) {
 	b, err := s.readByte()
+	log.Warn("readKind", "b", b)
 	if err != nil {
 		if len(s.stack) == 0 {
 			// At toplevel, Adjust the error to actual EOF. io.EOF is
